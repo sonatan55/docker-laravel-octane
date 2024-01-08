@@ -11,4 +11,9 @@ WORKDIR /var/www/html
 
 COPY ./php_src /var/www/html
 
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+# COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# RUN /bin/sh -c "composer install"
+
+#install laravel octane
+# RUN /bin/sh -c "composer require laravel/octane"

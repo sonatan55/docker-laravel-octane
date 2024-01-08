@@ -4,14 +4,34 @@ services:
   php-app:
     build:
       context: .
-      dockerfile: php.dockerfile
-      # dockerfile: php.dockerfile
+      dockerfile: dockerfiles/php.dockerfile
     container_name: php_app
     restart: unless-stopped
     volumes:
       - ./php_src:/var/www/html:delegated
     environment:
       - APP_ENV=development
-    entrypoint: ['php', '/var/www/html/artisan', 'octane:start', "--host=0.0.0.0"]
+    entrypoint: ['php', '/var/www/html/artisan', 'octane:start', "--host=0.0.0.0", "--port=9501"]
     ports:
-      - "3000:8000"  # Adjust the port as needed
+      - "9501:9501"  # Adjust the port as needed
+
+  composer:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: dockerfiles/composer.dockerfile
+    volumes:
+      - ./php_src:/var/www/html
+    depends_on:
+      - php-app
+
+  artisan:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
+    volumes:
+      - ./php_src:/var/www/html
+    entrypoint: ["php", "/var/www/html/artisan"]
+    depends_on:
+      - php-app
