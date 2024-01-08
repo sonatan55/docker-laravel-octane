@@ -12,5 +12,3 @@ WORKDIR /var/www/html
 COPY ./php_src /var/www/html
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
-# CMD [ "php", ,"/var/www/html/artisan", "octane:start" ]
