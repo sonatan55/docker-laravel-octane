@@ -12,5 +12,6 @@ services:
       - ./php_src:/var/www/html:delegated
     environment:
       - APP_ENV=development
+    entrypoint: ['php', '/var/www/html/artisan', 'octane:start', "--host=0.0.0.0"]
     ports:
-      - "9501:9501"  # Adjust the port as needed
+      - "3000:8000"  # Adjust the port as needed
